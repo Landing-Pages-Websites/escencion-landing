@@ -255,7 +255,7 @@ export function useMegaLeadForm(options: MegaLeadFormOptions): UseMegaLeadFormRe
           ip: null,
           clickData: {
             targetUrl: null,
-            elementText: "Get My Free IT Assessment",
+            elementText: "Get Started",
             elementType: "form",
             elementId: null,
             elementClasses: null,
@@ -265,7 +265,7 @@ export function useMegaLeadForm(options: MegaLeadFormOptions): UseMegaLeadFormRe
             scroll: { x: window.scrollX, y: window.scrollY },
             mousePosition: null,
           },
-          siteKey: "sk_mlqz6fxc_5drn2b575tm",
+          siteKey: "revtythbvh2ej9td",
           visitorId: getVisitorId(),
           source: "web",
           initialLandingPage: window.location.href,
