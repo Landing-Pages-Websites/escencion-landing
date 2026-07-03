@@ -318,15 +318,33 @@ function Kicker({ num, children }: { num?: string; children: string }): ReactEle
   );
 }
 
-function CtaLink({ label = "Get Started" }: { label?: string }): ReactElement {
+interface CtaLinkProps {
+  label?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+function CtaLink({
+  label = "Get Started",
+  secondaryLabel = "See how it works →",
+  secondaryHref = "#how-it-works",
+}: CtaLinkProps): ReactElement {
   return (
-    <a
-      href="#hero"
-      className="group mt-10 inline-flex items-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(95,233,222,0.35)] active:translate-y-px"
-    >
-      {label}
-      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-    </a>
+    <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+      <a
+        href="#hero"
+        className="group inline-flex items-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(95,233,222,0.35)] active:translate-y-px"
+      >
+        {label}
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+      </a>
+      <a
+        href={secondaryHref}
+        className="inline-flex items-center font-mono text-xs uppercase tracking-wider text-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
+      >
+        {secondaryLabel}
+      </a>
+    </div>
   );
 }
 
@@ -630,7 +648,7 @@ export default function Home(): ReactElement {
             ))}
           </div>
           <Reveal className="text-center">
-            <CtaLink />
+            <CtaLink secondaryLabel="See the roles we fill →" secondaryHref="#roles" />
           </Reveal>
         </div>
       </section>
@@ -797,9 +815,6 @@ export default function Home(): ReactElement {
             <span className="font-display text-lg font-bold text-ink">Escencion</span>
           </div>
           <nav className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-muted">
-            <a href="#how-it-works" className="hover:text-accent">How It Works</a>
-            <a href="#roles" className="hover:text-accent">Roles</a>
-            <a href="#why-us" className="hover:text-accent">Why Us</a>
             <a href="https://escencion.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent">escencion.com</a>
             <a href="https://cynexlink.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent">cynexlink.com</a>
           </nav>

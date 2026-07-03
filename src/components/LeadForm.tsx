@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useMegaLeadForm } from "@/hooks/useMegaLeadForm";
 import { formatPhone, isValidPhone } from "@/hooks/usePhoneValidation";
-import { ArrowRight, Check } from "@/components/icons";
+import { ArrowRight, Check, ChevronDown } from "@/components/icons";
 
 // ── Mega lead-routing config (real Escencion site/customer IDs) ──
 const CUSTOMER_ID = "8edb6f3d-5374-48ad-ad52-41f6fc1fc387";
@@ -202,41 +202,51 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
         <label htmlFor={id("role_to_fill")}>
           Role looking to fill <span className="req">*</span>
         </label>
-        <select
-          id={id("role_to_fill")}
-          name="role_to_fill"
-          required
-          value={values.role_to_fill}
-          onChange={onChange}
-        >
-          <option value="" disabled>
-            Select a role area…
-          </option>
-          {ROLE_OPTIONS.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
+        <div className="relative">
+          <select
+            id={id("role_to_fill")}
+            name="role_to_fill"
+            required
+            className="appearance-none"
+            style={{ backgroundImage: "none" }}
+            value={values.role_to_fill}
+            onChange={onChange}
+          >
+            <option value="" disabled>
+              Select a role area…
             </option>
-          ))}
-        </select>
+            {ROLE_OPTIONS.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+        </div>
       </div>
 
       <div className="field sm:col-span-2">
         <label htmlFor={id("is_msp_mssp_owner")}>
           Are you an MSP or MSSP business owner? <span className="req">*</span>
         </label>
-        <select
-          id={id("is_msp_mssp_owner")}
-          name="is_msp_mssp_owner"
-          required
-          value={values.is_msp_mssp_owner}
-          onChange={onChange}
-        >
-          <option value="" disabled>
-            Select one…
-          </option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
+        <div className="relative">
+          <select
+            id={id("is_msp_mssp_owner")}
+            name="is_msp_mssp_owner"
+            required
+            className="appearance-none"
+            style={{ backgroundImage: "none" }}
+            value={values.is_msp_mssp_owner}
+            onChange={onChange}
+          >
+            <option value="" disabled>
+              Select one…
+            </option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+        </div>
       </div>
 
       {status === "error" && (

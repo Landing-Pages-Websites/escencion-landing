@@ -3,14 +3,6 @@
 import { useEffect, useState, type ReactElement } from "react";
 import { ArrowRight, Close, Menu } from "@/components/icons";
 
-const NAV_LINKS = [
-  { label: "The Team", href: "#team" },
-  { label: "Roles", href: "#roles" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Results", href: "#testimonials" },
-];
-
 function Wordmark(): ReactElement {
   return (
     <a href="#hero" className="flex items-center gap-2.5" aria-label="Escencion — home">
@@ -62,17 +54,6 @@ export default function SiteChrome(): ReactElement {
       >
         <nav className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4 md:px-12">
           <Wordmark />
-          <div className="hidden items-center gap-8 lg:flex">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="font-mono text-xs uppercase tracking-widest text-muted transition-colors hover:text-accent"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
           <div className="flex items-center gap-3">
             <a
               href="#hero"
@@ -121,22 +102,10 @@ export default function SiteChrome(): ReactElement {
               <Close className="h-5 w-5" />
             </button>
           </div>
-          <div className="flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setDrawerOpen(false)}
-                className="rounded-lg px-3 py-3 font-mono text-sm uppercase tracking-widest text-muted transition-colors hover:bg-surface-2 hover:text-accent"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
           <a
             href="#hero"
             onClick={() => setDrawerOpen(false)}
-            className="mt-6 flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)]"
+            className="flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)]"
           >
             Get Started <ArrowRight className="h-4 w-4" />
           </a>
