@@ -50,8 +50,6 @@ const EMPTY: FormState = {
 function pushDataLayer(): void {
   const w = window as unknown as { dataLayer?: Record<string, unknown>[] };
   w.dataLayer = w.dataLayer || [];
-  const mt = (window as unknown as { MegaTag?: { trackEvent?: (n: string, d?: Record<string, unknown>) => void } }).MegaTag;
-  mt?.trackEvent?.("form_submit", { form: "escencion-lead" });
   w.dataLayer.push({ event: "form_submit" });
 }
 
@@ -176,6 +174,7 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
           type="tel"
           inputMode="numeric"
           autoComplete="tel"
+          pattern="\(\d{3}\) \d{3}-\d{4}"
           placeholder="(555) 555-5555"
           required
           value={values.phone}

@@ -321,7 +321,7 @@ function Kicker({ num, children }: { num?: string; children: string }): ReactEle
 function CtaLink({ label = "Get Started" }: { label?: string }): ReactElement {
   return (
     <a
-      href="#get-started"
+      href="#hero"
       className="group mt-10 inline-flex items-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(95,233,222,0.35)] active:translate-y-px"
     >
       {label}
@@ -405,6 +405,11 @@ export default function Home(): ReactElement {
           </Reveal>
         </div>
         <Marquee items={MARQUEE_ITEMS} />
+        <div className="mx-auto max-w-[1200px] px-6 md:px-12">
+          <Reveal className="text-center">
+            <CtaLink />
+          </Reveal>
+        </div>
       </section>
 
       {/* ═══ THE TEAM ═══ */}
@@ -477,6 +482,9 @@ export default function Home(): ReactElement {
               </a>
             </Reveal>
           </div>
+          <Reveal className="text-center">
+            <CtaLink />
+          </Reveal>
         </div>
       </section>
 
@@ -514,6 +522,9 @@ export default function Home(): ReactElement {
               </Reveal>
             ))}
           </div>
+          <Reveal className="text-center">
+            <CtaLink />
+          </Reveal>
         </div>
       </section>
 
@@ -618,6 +629,9 @@ export default function Home(): ReactElement {
               </Reveal>
             ))}
           </div>
+          <Reveal className="text-center">
+            <CtaLink />
+          </Reveal>
         </div>
       </section>
 
@@ -663,6 +677,9 @@ export default function Home(): ReactElement {
               </p>
             </Reveal>
           </div>
+          <Reveal className="text-center">
+            <CtaLink />
+          </Reveal>
         </div>
       </section>
 
@@ -712,6 +729,9 @@ export default function Home(): ReactElement {
           <Reveal>
             <TestimonialSlider items={TESTIMONIALS} />
           </Reveal>
+          <Reveal className="text-center">
+            <CtaLink />
+          </Reveal>
         </div>
       </section>
 
@@ -724,6 +744,9 @@ export default function Home(): ReactElement {
           </Reveal>
           <Reveal>
             <Faq entries={FAQS} />
+          </Reveal>
+          <Reveal className="text-center">
+            <CtaLink />
           </Reveal>
         </div>
       </section>
