@@ -1,0 +1,303 @@
+"use client";
+
+import { useEffect, useCallback, useRef } from "react";
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+interface Attribution {
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+  utm_term: string | null;
+  utm_content: string | null;
+  gclid: string | null;
+  gbraid: string | null;
+  wbraid: string | null;
+  fbclid: string | null;
+  fbp: string | null;
+  fbc: string | null;
+}
+
+interface SubmissionPayload {
+  customer_id: string;
+  site_id: string;
+  source_provider: string;
+  form_data: Record<string, unknown>;
+  url: string;
+  referrer_url: string | null;
+  session_id: string;
+  visitor_id: string;
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+  utm_term: string | null;
+  utm_content: string | null;
+  gclid: string | null;
+  gbraid: string | null;
+  wbraid: string | null;
+  fbclid: string | null;
+  fbp: string | null;
+  fbc: string | null;
+}
+
+interface SubmissionResponse {
+  ok: boolean;
+  id?: string;
+}
+
+interface MegaLeadFormOptions {
+  site_id: string;
+  customer_id: string;
+  source_provider: string;
+}
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT = "https://analytics.gomega.ai/submission/submit";
+
+const STORAGE_KEYS = {
+  VISITOR_ID: "_mega_vid",
+  SESSION_ID: "_mega_sid",
+  ATTRIBUTION: "_mega_attr",
+};
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+const generateId = (prefix: string): string => {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return `${prefix}_${crypto.randomUUID()}`;
+  }
+  return `${prefix}_${"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+    /[xy]/g,
+    (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    }
+  )}`;
+};
+
+const getCookie = (name: string): string | null => {
+  if (typeof document === "undefined") return null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    return parts.pop()?.split(";").shift() || null;
+  }
+  return null;
+};
+
+const getVisitorId = (): string => {
+  if (typeof localStorage === "undefined") return generateId("vis");
+  let visitorId = localStorage.getItem(STORAGE_KEYS.VISITOR_ID);
+  if (!visitorId) {
+    visitorId = generateId("vis");
+    localStorage.setItem(STORAGE_KEYS.VISITOR_ID, visitorId);
+  }
+  return visitorId;
+};
+
+const getSessionId = (): string => {
+  if (typeof sessionStorage === "undefined") return generateId("sess");
+  let sessionId = sessionStorage.getItem(STORAGE_KEYS.SESSION_ID);
+  if (!sessionId) {
+    sessionId = generateId("sess");
+    sessionStorage.setItem(STORAGE_KEYS.SESSION_ID, sessionId);
+  }
+  return sessionId;
+};
+
+// ============================================================================
+// ATTRIBUTION CAPTURE
+// ============================================================================
+
+const captureAttribution = (): Attribution => {
+  if (typeof window === "undefined") {
+    return {
+      utm_source: null, utm_medium: null, utm_campaign: null,
+      utm_term: null, utm_content: null, gclid: null,
+      gbraid: null, wbraid: null, fbclid: null, fbp: null, fbc: null,
+    };
+  }
+
+  const url = new URL(window.location.href);
+  const params = url.searchParams;
+
+  const attribution: Attribution = {
+    utm_source: params.get("utm_source"),
+    utm_medium: params.get("utm_medium"),
+    utm_campaign: params.get("utm_campaign"),
+    utm_term: params.get("utm_term"),
+    utm_content: params.get("utm_content"),
+    gclid: params.get("gclid"),
+    gbraid: params.get("gbraid"),
+    wbraid: params.get("wbraid"),
+    fbclid: params.get("fbclid"),
+    fbp: getCookie("_fbp"),
+    fbc: getCookie("_fbc"),
+  };
+
+  if (attribution.fbclid && !attribution.fbc) {
+    attribution.fbc = `fb.1.${Date.now()}.${attribution.fbclid}`;
+  }
+
+  return attribution;
+};
+
+const initAttribution = (): Attribution => {
+  if (typeof window === "undefined" || typeof localStorage === "undefined") {
+    return captureAttribution();
+  }
+
+  const trackingParams = ["utm_source", "gclid", "fbclid", "gbraid", "wbraid"];
+  const url = new URL(window.location.href);
+  const hasTrackingParams = trackingParams.some((param) =>
+    url.searchParams.has(param)
+  );
+
+  if (hasTrackingParams) {
+    const attribution = captureAttribution();
+    localStorage.setItem(STORAGE_KEYS.ATTRIBUTION, JSON.stringify(attribution));
+    return attribution;
+  }
+
+  const stored = localStorage.getItem(STORAGE_KEYS.ATTRIBUTION);
+  if (stored) {
+    try {
+      return JSON.parse(stored) as Attribution;
+    } catch {
+      console.warn("Failed to parse stored attribution");
+    }
+  }
+
+  const attribution = captureAttribution();
+  localStorage.setItem(STORAGE_KEYS.ATTRIBUTION, JSON.stringify(attribution));
+  return attribution;
+};
+
+// ============================================================================
+// THE HOOK
+// ============================================================================
+
+interface UseMegaLeadFormReturn {
+  submit: (formData: Record<string, unknown>) => Promise<SubmissionResponse>;
+  isReady: boolean;
+}
+
+export function useMegaLeadForm(options: MegaLeadFormOptions): UseMegaLeadFormReturn {
+  const isInitialized = useRef(false);
+
+  useEffect(() => {
+    if (!isInitialized.current) {
+      initAttribution();
+      isInitialized.current = true;
+    }
+  }, []);
+
+  const submit = useCallback(
+    async (formData: Record<string, unknown>): Promise<SubmissionResponse> => {
+      const attribution = initAttribution();
+
+      const payload: SubmissionPayload = {
+        customer_id: options.customer_id,
+        site_id: options.site_id,
+        source_provider: options.source_provider,
+        form_data: formData,
+        url: window.location.href,
+        referrer_url: document.referrer || null,
+        session_id: getSessionId(),
+        visitor_id: getVisitorId(),
+        utm_source: attribution.utm_source,
+        utm_medium: attribution.utm_medium,
+        utm_campaign: attribution.utm_campaign,
+        utm_term: attribution.utm_term,
+        utm_content: attribution.utm_content,
+        gclid: attribution.gclid,
+        gbraid: attribution.gbraid,
+        wbraid: attribution.wbraid,
+        fbclid: attribution.fbclid,
+        fbp: attribution.fbp,
+        fbc: attribution.fbc,
+      };
+
+      const response = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      // Post form_submit event directly to events-api for Conversions tab
+      // (no optimizer needed — we send the exact payload format it expects)
+      try {
+        const eventsPayload = {
+          eventId: `evt_${crypto.randomUUID()}`,
+          eventType: "form_submit",
+          sessionId: getSessionId(),
+          userId: getVisitorId(),
+          clientTimestamp: new Date().toISOString(),
+          currentUrl: window.location.href,
+          context: null,
+          userAgent: navigator.userAgent,
+          referrer: document.referrer || null,
+          pageLoadTime: Math.round(performance.now()),
+          ip: null,
+          clickData: {
+            targetUrl: null,
+            elementText: "Get My Free IT Assessment",
+            elementType: "form",
+            elementId: null,
+            elementClasses: null,
+            elementAttributes: null,
+            isActualTarget: true,
+            viewport: { width: window.innerWidth, height: window.innerHeight },
+            scroll: { x: window.scrollX, y: window.scrollY },
+            mousePosition: null,
+          },
+          siteKey: "sk_mlqz6fxc_5drn2b575tm",
+          visitorId: getVisitorId(),
+          source: "web",
+          initialLandingPage: window.location.href,
+          initialReferrer: document.referrer || null,
+          utmSource: attribution.utm_source,
+          utmMedium: attribution.utm_medium,
+          utmCampaign: attribution.utm_campaign,
+          utmTerm: attribution.utm_term,
+          utmContent: attribution.utm_content,
+          gclid: attribution.gclid,
+          gbraid: attribution.gbraid,
+          wbraid: attribution.wbraid,
+          fbclid: attribution.fbclid,
+          fbp: attribution.fbp,
+          fbc: attribution.fbc,
+          formData: formData,
+        };
+        fetch("https://events-api.gomega.ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(eventsPayload),
+        }).catch(() => {});
+      } catch (e) {
+        console.warn("Events API post failed:", e);
+      }
+
+      return result;
+    },
+    [options]
+  );
+
+  return { submit, isReady: typeof window !== "undefined" };
+}
+
+export default useMegaLeadForm;

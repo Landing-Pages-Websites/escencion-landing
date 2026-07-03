@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #1a2b4a;
+  --color-navy-light: #243560;
+  --color-blue: #2756E3;
+  --color-blue-dark: #1e45c0;
+  --color-blue-light: #4a73f0;
+  --color-orange: #FF4601;
+  --color-orange-dark: #E03D00;
+  --color-slate-bg: #F4F6F9;
+  --color-dark-section: #1B2A4A;
+  --color-text: #2D2D2D;
+  --color-text-light: #6B7280;
+  --font-display: "Montserrat", sans-serif;
+  --font-body: "Montserrat", sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); -webkit-font-smoothing: antialiased; color: var(--color-text); }
+
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, #2756E3, #FF4601);
+  z-index: 9999; transition: width 0.1s linear;
+}
+
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.parallax-bg { background-attachment: fixed; background-size: cover; background-position: center; }
+@media (max-width: 768px) { .parallax-bg { background-attachment: scroll; } }
+
+.texture-overlay::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+
+/* Float labels — light (white bg forms) */
+.fl-light { position: relative; }
+.fl-light input { width: 100%; padding: 1.25rem 1rem 0.5rem; border: 2px solid #d1d5db; border-radius: 0.5rem; font-size: 1rem; background: #fff; color: #2D2D2D; transition: border-color 0.2s; outline: none; }
+.fl-light input:focus { border-color: #2756E3; }
+.fl-light label { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1rem; color: #9ca3af; pointer-events: none; transition: all 0.2s ease; }
+.fl-light input:focus + label, .fl-light input:not(:placeholder-shown) + label { top: 0.65rem; transform: translateY(0); font-size: 0.75rem; color: #2756E3; }
+
+/* Float labels — dark bg forms */
+.fl-dark { position: relative; }
+.fl-dark input { width: 100%; padding: 1.25rem 1rem 0.5rem; border: 2px solid rgba(255,255,255,0.25); border-radius: 0.5rem; font-size: 1rem; background: rgba(255,255,255,0.08); color: #fff; transition: border-color 0.2s; outline: none; }
+.fl-dark input:focus { border-color: #FF4601; }
+.fl-dark label { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1rem; color: rgba(255,255,255,0.5); pointer-events: none; transition: all 0.2s ease; }
+.fl-dark input:focus + label, .fl-dark input:not(:placeholder-shown) + label { top: 0.65rem; transform: translateY(0); font-size: 0.75rem; color: #FF4601; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
