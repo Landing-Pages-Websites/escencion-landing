@@ -814,10 +814,6 @@ export default function Home(): ReactElement {
             </span>
             <span className="font-display text-lg font-bold text-ink">Escencion</span>
           </div>
-          <nav className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-muted">
-            <a href="https://escencion.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent">escencion.com</a>
-            <a href="https://cynexlink.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent">cynexlink.com</a>
-          </nav>
         </div>
         <div className="mx-auto mt-8 max-w-[1200px] px-6 md:px-12">
           <p className="text-xs leading-relaxed text-muted-2">
