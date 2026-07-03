@@ -1,0 +1,48 @@
+{
+  "customer": "Escencion",
+  "landing_page": "go.escencion.com",
+  "note": "All credibility claims, stats, and testimonials are sourced from the customer's public reference page (talent.escencion.com) and the onboarding/strategy inputs. Per messaging guardrails, no client names, logos, or review counts were invented beyond the three named public testimonials already on the reference page.",
+  "stats": [
+    {
+      "claim": "10+ Years running our own MSP & MSSP",
+      "source_url": "https://talent.escencion.com",
+      "verified": true,
+      "basis": "Operator-led positioning — founder (Adam Totounji, Cynexlink) has run his own MSP/MSSP for a decade; from onboarding + reference page."
+    },
+    {
+      "claim": "Ready Day One — no training from zero",
+      "source_url": "https://talent.escencion.com",
+      "verified": true,
+      "basis": "Reference page hero — candidates already speak the MSP/MSSP world."
+    },
+    {
+      "claim": "Every placement backed by a replacement guarantee",
+      "source_url": "https://talent.escencion.com",
+      "verified": true,
+      "basis": "Reference page #how-it-works — replacement guarantee on every placement."
+    }
+  ],
+  "testimonials": [
+    {
+      "claim": "Way better than what I expected. They underpromised and over-performed at every level.",
+      "name": "Cory Russell",
+      "company": "Layer7 Systems (Cybersecurity MSP)",
+      "source_url": "https://talent.escencion.com",
+      "verified": true
+    },
+    {
+      "claim": "The offer creation was unique, going to be a great opportunity to lead with.",
+      "name": "David Rauschendorfer",
+      "company": "Cybersecurity Resource",
+      "source_url": "https://talent.escencion.com",
+      "verified": true
+    },
+    {
+      "claim": "Your team understands systems really well. They're delivering everything they said they would.",
+      "name": "Peter Prieto",
+      "company": "NdataStor (Tech & Storage)",
+      "source_url": "https://talent.escencion.com",
+      "verified": true
+    }
+  ]
+}
