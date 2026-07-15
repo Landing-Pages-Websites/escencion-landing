@@ -1,8 +1,9 @@
 "use client";
 
 import type { ReactElement } from "react";
+import Image from "next/image";
 import LeadForm from "@/components/LeadForm";
-import Marquee from "@/components/Marquee";
+import ClientLogos from "@/components/ClientLogos";
 import Faq, { type FaqEntry } from "@/components/Faq";
 import TestimonialSlider, { type Testimonial } from "@/components/TestimonialSlider";
 import Reveal from "@/components/Reveal";
@@ -39,19 +40,6 @@ const STAT_CHIPS = [
   { big: "10+ Years", small: "running our own MSP & MSSP" },
   { big: "Source · Place · Manage", small: "the whole hire, handled for you" },
   { big: "Ready Day One", small: "no training from zero" },
-];
-
-const MARQUEE_ITEMS = [
-  { label: "Layer7 Systems", featured: true },
-  { label: "// MSP" },
-  { label: "Cybersecurity Resource", featured: true },
-  { label: "// MSSP" },
-  { label: "NdataStor", featured: true },
-  { label: "// CYBERSECURITY" },
-  { label: "// NOC" },
-  { label: "// SOC" },
-  { label: "// HELP DESK" },
-  { label: "// vCIO" },
 ];
 
 interface RoleCard {
@@ -333,7 +321,7 @@ function CtaLink({
     <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
       <a
         href="#hero"
-        className="group inline-flex items-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(95,233,222,0.35)] active:translate-y-px"
+        className="group inline-flex items-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(139, 92, 246,0.35)] active:translate-y-px"
       >
         {label}
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -410,7 +398,7 @@ export default function Home(): ReactElement {
         </div>
       </section>
 
-      {/* ═══ PROOF / MARQUEE ═══ */}
+      {/* ═══ PROOF / CLIENT LOGOS ═══ */}
       <section id="proof" className="border-y border-border bg-surface-3 py-16 md:py-20">
         <div className="mx-auto max-w-[1200px] px-6 md:px-12">
           <Reveal className="mb-10 max-w-2xl">
@@ -421,9 +409,9 @@ export default function Home(): ReactElement {
               teams they were scaling, and the parts of the business that needed a fix.
             </p>
           </Reveal>
-        </div>
-        <Marquee items={MARQUEE_ITEMS} />
-        <div className="mx-auto max-w-[1200px] px-6 md:px-12">
+          <Reveal className="mt-12">
+            <ClientLogos />
+          </Reveal>
           <Reveal className="text-center">
             <CtaLink />
           </Reveal>
@@ -447,7 +435,16 @@ export default function Home(): ReactElement {
           </Reveal>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2">
-            <Reveal as="article" className="glow-hover flex flex-col rounded-2xl border border-border bg-surface p-8">
+            <Reveal as="article" className="glow-hover group flex flex-col rounded-2xl border border-border bg-surface p-8">
+              <div className="mb-6 overflow-hidden rounded-xl border border-border transition-colors duration-200 group-hover:border-accent/40">
+                <Image
+                  src="/images/team/adam.jpg"
+                  alt="Adam Totounji, Founder of Escencion"
+                  width={720}
+                  height={900}
+                  className="aspect-[4/5] w-full object-cover"
+                />
+              </div>
               <div className="mb-6 flex items-center justify-between">
                 <span className="kicker">Founder</span>
                 <span className="rounded-full border border-accent/30 px-3 py-1 font-mono text-[11px] text-accent">
@@ -475,7 +472,16 @@ export default function Home(): ReactElement {
               </a>
             </Reveal>
 
-            <Reveal as="article" delay={80} className="glow-hover flex flex-col rounded-2xl border border-border bg-surface p-8">
+            <Reveal as="article" delay={80} className="glow-hover group flex flex-col rounded-2xl border border-border bg-surface p-8">
+              <div className="mb-6 overflow-hidden rounded-xl border border-border transition-colors duration-200 group-hover:border-accent/40">
+                <Image
+                  src="/images/team/margret.jpg"
+                  alt="Margret De Bruyn, Operations & Management at Escencion"
+                  width={720}
+                  height={900}
+                  className="aspect-[4/5] w-full object-cover"
+                />
+              </div>
               <div className="mb-6 flex items-center justify-between">
                 <span className="kicker">Operations</span>
                 <span className="rounded-full border border-accent/30 px-3 py-1 font-mono text-[11px] text-accent">
@@ -808,11 +814,14 @@ export default function Home(): ReactElement {
       {/* ═══ FOOTER ═══ */}
       <footer className="border-t border-border bg-surface-3 py-12">
         <div className="mx-auto flex max-w-[1200px] flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between md:px-12">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md border border-accent/40 bg-surface font-mono text-sm font-bold text-accent">
-              E
-            </span>
-            <span className="font-display text-lg font-bold text-ink">Escencion</span>
+          <div className="flex items-center">
+            <Image
+              src="/images/escencion-logo-white.png"
+              alt="Escencion"
+              width={168}
+              height={34}
+              className="h-8 w-auto"
+            />
           </div>
         </div>
         <div className="mx-auto mt-8 max-w-[1200px] px-6 md:px-12">

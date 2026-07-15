@@ -261,7 +261,7 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
           onClick={onSubmit}
           disabled={submitting}
           aria-label="Get Started — book your MSP / MSSP strategy session"
-          className="group flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(95,233,222,0.35)] active:translate-y-px disabled:cursor-not-allowed disabled:bg-muted-2 disabled:shadow-none"
+          className="group flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(139, 92, 246,0.35)] active:translate-y-px disabled:cursor-not-allowed disabled:bg-muted-2 disabled:shadow-none"
         >
           {submitting ? "Sending…" : "Get Started"}
           {!submitting && (

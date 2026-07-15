@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useState, type ReactElement } from "react";
+import Image from "next/image";
 import { ArrowRight, Close, Menu } from "@/components/icons";
 
 function Wordmark(): ReactElement {
   return (
-    <a href="#hero" className="flex items-center gap-2.5" aria-label="Escencion — home">
-      <span className="flex h-8 w-8 items-center justify-center rounded-md border border-accent/40 bg-surface font-mono text-sm font-bold text-accent">
-        E
-      </span>
-      <span className="font-display text-lg font-bold tracking-tight text-ink">
-        Escencion
-      </span>
+    <a href="#hero" className="flex items-center" aria-label="Escencion — home">
+      <Image
+        src="/images/escencion-logo-white.png"
+        alt="Escencion"
+        width={150}
+        height={30}
+        priority
+        className="h-7 w-auto md:h-8"
+      />
     </a>
   );
 }
@@ -57,7 +60,7 @@ export default function SiteChrome(): ReactElement {
           <div className="flex items-center gap-3">
             <a
               href="#hero"
-              className="hidden rounded-lg bg-accent px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all hover:bg-accent-hover hover:shadow-[0_0_20px_rgba(95,233,222,0.35)] sm:inline-block"
+              className="hidden rounded-lg bg-accent px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all hover:bg-accent-hover hover:shadow-[0_0_20px_rgba(139, 92, 246,0.35)] sm:inline-block"
             >
               Get Started
             </a>
@@ -120,7 +123,7 @@ export default function SiteChrome(): ReactElement {
       >
         <a
           href="#get-started"
-          className="flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] shadow-[0_0_28px_rgba(95,233,222,0.4)] transition-all hover:bg-accent-hover"
+          className="flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] shadow-[0_0_28px_rgba(139, 92, 246,0.4)] transition-all hover:bg-accent-hover"
         >
           Get Started <ArrowRight className="h-4 w-4" />
         </a>
