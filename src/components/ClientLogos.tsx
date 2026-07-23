@@ -18,6 +18,9 @@ const CLIENT_LOGOS: ClientLogo[] = [
   { file: "layer-7-systems.png", alt: "Layer 7 Systems" },
   { file: "lm-consulting.png", alt: "LM Consulting" },
   { file: "ndatastor.png", alt: "ndataStor" },
+  { file: "edge-360.png", alt: "Edge 360" },
+  { file: "crating-computing.png", alt: "Cratin Computing" },
+  { file: "rtcs.png", alt: "RTCS" },
 ];
 
 export default function ClientLogos(): ReactElement {
