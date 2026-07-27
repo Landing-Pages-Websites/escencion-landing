@@ -358,13 +358,13 @@ export default function Home(): ReactElement {
           <div className="lg:col-start-1 lg:row-start-1 lg:pt-4">
             <Kicker>Only for MSP &amp; MSSP owners</Kicker>
             <h1 className="h1 text-ink">
-              We hire and manage the people your{" "}
+              We find and place the people your{" "}
               <span className="text-accent">MSP or MSSP</span> needs.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted md:text-lg">
               Tell us the role you&apos;re hiring for — technical, sales, marketing,
-              operations, admin, or anything in between — and we&apos;ll find, place,
-              and manage someone already experienced in MSP and MSSP environments.
+              operations, admin, or anything in between — and we&apos;ll find and
+              place someone already experienced in MSP and MSSP environments.
             </p>
           </div>
 
