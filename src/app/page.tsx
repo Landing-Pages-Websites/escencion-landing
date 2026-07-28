@@ -282,8 +282,8 @@ const FAQS: FaqEntry[] = [
     a: "Both. Whether you need someone full-time or a fractional role a few days a month, we source and place either way.",
   },
   {
-    q: "Do you just recruit, or manage the person too?",
-    a: "We source, vet, and place the right person, and we can stay involved to make sure the placement performs. Every placement carries a replacement guarantee.",
+    q: "What support do you provide after placement?",
+    a: "We source, vet, and place the right person, then back every placement with a replacement guarantee. If the hire does not work out inside the agreed window, we re-run the search.",
   },
   {
     q: "Can you hire internationally?",
@@ -428,7 +428,7 @@ export default function Home(): ReactElement {
               Escencion is a people partner, not a faceless vendor. It is led by Adam
               Totounji, who has run his own MSP and MSSP (Cynexlink) in Southern
               California for 10 years, building a strong network of talent as he
-              personally found, vetted, placed, and managed every one of these roles.
+              personally found, vetted, and placed people across every one of these roles.
               He is backed by an operations leader who builds and runs teams, and that
               network and hands-on experience now goes to work for your shop.
             </p>
@@ -491,10 +491,9 @@ export default function Home(): ReactElement {
               <h3 className="h3 text-ink">Margret De Bruyn</h3>
               <p className="mt-1 text-sm text-muted">Operations &amp; Management, Escencion</p>
               <p className="mt-5 flex-1 leading-relaxed text-muted">
-                Margret runs delivery and management with an operations background built
-                around businesses in the $100M range. Once a hire is in, she makes sure
-                the engagement runs like a real process, from onboarding through
-                performance, so the people we place actually perform and stick.
+                Margret brings an operations background built around businesses in the
+                $100M range. She applies that operating experience to the roles we place,
+                so the candidates we recommend are ready to perform and stick.
               </p>
               <a
                 href="https://www.linkedin.com/"

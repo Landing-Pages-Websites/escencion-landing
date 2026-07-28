@@ -3,7 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Escencion — We Hire & Manage the People Your MSP or MSSP Needs",
+  title: "Escencion — We Find & Place the People Your MSP or MSSP Needs",
   description:
     "Operator-led staffing for MSP, MSSP & cybersecurity firms. We find, place, and back with a replacement guarantee talent that already speaks your world — ready day one. Sourced by a 10-year MSP/MSSP owner.",
   metadataBase: new URL("https://escencion.com"),
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   openGraph: {
-    title: "Escencion — We Hire & Manage the People Your MSP or MSSP Needs",
+    title: "Escencion — We Find & Place the People Your MSP or MSSP Needs",
     description:
       "Operator-led staffing for MSP, MSSP & cybersecurity firms. Talent that speaks your world, ready day one, backed by a replacement guarantee.",
     type: "website",
