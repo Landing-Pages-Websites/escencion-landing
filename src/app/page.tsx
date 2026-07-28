@@ -38,7 +38,7 @@ type IconType = (props: { className?: string }) => ReactElement;
 
 const STAT_CHIPS = [
   { big: "10+ Years", small: "running our own MSP & MSSP" },
-  { big: "Source · Place · Manage", small: "the whole hire, handled for you" },
+  { big: "Source · Vet · Place", small: "the right MSP & MSSP hire, placed fast" },
   { big: "Ready Day One", small: "no training from zero" },
 ];
 
