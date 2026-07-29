@@ -27,7 +27,7 @@ const ROLE_OPTIONS = [
   "Other",
 ] as const;
 
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "submitting" | "success" | "error" | "disqualified";
 
 interface FormState {
   full_name: string;
@@ -84,6 +84,13 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
     // Validate FIRST — an empty/invalid submit must not fire an event or redirect.
     if (!form.reportValidity() || !isValidPhone(values.phone)) return;
 
+    // Gate: only MSP/MSSP owners may submit. "No" respondents are blocked here —
+    // no network request, no dataLayer event, no Calendly redirect.
+    if (values.is_msp_mssp_owner === "No") {
+      setStatus("disqualified");
+      return;
+    }
+
     setStatus("submitting");
     try {
       const result = await submit({
@@ -116,6 +123,26 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
         <p className="text-sm text-muted">
           Success — redirecting you to book your strategy session&hellip;
         </p>
+      </div>
+    );
+  }
+
+  if (status === "disqualified") {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-10 text-center">
+        <h3 className="h3 text-ink">This service is for MSP &amp; MSSP owners</h3>
+        <p className="text-sm text-muted">
+          Thank you for your interest — Escencion works exclusively with MSP and
+          MSSP business owners. If you are an MSP or MSSP owner, please go back
+          and select &quot;Yes&quot; to continue.
+        </p>
+        <button
+          type="button"
+          onClick={() => setStatus("idle")}
+          className="mt-1 font-mono text-sm font-semibold uppercase tracking-wider text-accent transition-colors hover:text-accent-hover"
+        >
+          ← Go back
+        </button>
       </div>
     );
   }
