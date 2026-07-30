@@ -212,40 +212,6 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
         />
       </div>
 
-      <div className="sm:col-span-2 rounded-lg border border-[var(--color-border)] p-4">
-  <div className="flex items-start gap-3">
-    <input
-      id={id("sms_consent")}
-      name="sms_consent"
-      type="checkbox"
-      checked={smsConsent}
-      disabled={submitting}
-      onChange={(e) => setSmsConsent(e.target.checked)}
-      className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
-    />
-
-    <label
-      htmlFor={id("sms_consent")}
-      className="text-sm leading-6 text-muted"
-    >
-      I agree to receive SMS/text messages from Escencion regarding my inquiry,
-      consultation, appointment scheduling, meeting reminders, service updates,
-      follow-ups, and customer support. Message frequency varies. Message and
-      data rates may apply. Reply STOP to opt out and HELP for help. Consent is
-      not a condition of purchase. View our{" "}
-      <a
-        href="https://escencion.com/privacy-policy-page"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover"
-      >
-        Privacy Policy
-      </a>
-      .
-    </label>
-  </div>
-</div>
-
       <div className="field sm:col-span-2">
         <label htmlFor={id("company_name")}>
           Company Name <span className="req">*</span>
@@ -312,7 +278,39 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
           <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
         </div>
       </div>
+<div className="sm:col-span-2 rounded-lg border border-[var(--color-border)] p-4">
+  <div className="flex items-start gap-3">
+    <input
+      id={id("sms_consent")}
+      name="sms_consent"
+      type="checkbox"
+      checked={smsConsent}
+      disabled={submitting}
+      onChange={(e) => setSmsConsent(e.target.checked)}
+      className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
+    />
 
+    <label
+      htmlFor={id("sms_consent")}
+      className="text-sm leading-6 text-muted"
+    >
+      I agree to receive SMS/text messages from Escencion regarding my inquiry,
+      consultation, appointment scheduling, meeting reminders, service updates,
+      follow-ups, and customer support. Message frequency varies. Message and
+      data rates may apply. Reply STOP to opt out and HELP for help. Consent is
+      not a condition of purchase. View our{" "}
+      <a
+        href="https://escencion.com/privacy-policy-page"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover"
+      >
+        Privacy Policy
+      </a>
+      .
+    </label>
+  </div>
+</div>
       {status === "error" && (
         <p className="text-sm text-[var(--color-error)] sm:col-span-2" role="alert">
           Something went wrong. Please try again.
