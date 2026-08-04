@@ -302,7 +302,7 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       assistance. Consent is not a condition of purchasing any goods or
       services. View our{" "}
       <a
-        href="/privacy-policy"
+        href="https://escencion.com/privacy-policy-page"
         target="_blank"
         rel="noopener noreferrer"
         className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover"
