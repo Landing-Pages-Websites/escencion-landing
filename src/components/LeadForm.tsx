@@ -27,7 +27,7 @@ const ROLE_OPTIONS = [
   "Other",
 ] as const;
 const SMS_CONSENT_TEXT =
-  "I agree to receive SMS/text messages from Escencion regarding my inquiry, consultation, appointment scheduling, meeting reminders, service updates, follow-ups, and customer support. Message frequency varies. Message and data rates may apply. Reply STOP to opt out and HELP for help. Consent is not a condition of purchase.";
+  "I agree to receive conversational SMS/text messages from Escencion regarding my inquiry, consultation, appointment scheduling, meeting reminders, service updates, follow-ups, and customer support. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchasing any goods or services.";
 type Status = "idle" | "submitting" | "success" | "error" | "disqualified";
 
 interface FormState {
@@ -294,18 +294,29 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       htmlFor={id("sms_consent")}
       className="text-sm leading-6 text-muted"
     >
-      I agree to receive SMS/text messages from Escencion regarding my inquiry,
-      consultation, appointment scheduling, meeting reminders, service updates,
-      follow-ups, and customer support. Message frequency varies. Message and
-      data rates may apply. Reply STOP to opt out and HELP for help. Consent is
-      not a condition of purchase. View our{" "}
+      I agree to receive conversational SMS/text messages from Escencion
+      regarding my inquiry, consultation, appointment scheduling, meeting
+      reminders, service updates, follow-ups, and customer support.
+      Message frequency varies. Message and data rates may apply.
+      Reply <strong>STOP</strong> to opt out or <strong>HELP</strong> for
+      assistance. Consent is not a condition of purchasing any goods or
+      services. View our{" "}
       <a
-        href="https://escencion.com/privacy-policy-page"
+        href="/privacy-policy"
         target="_blank"
         rel="noopener noreferrer"
         className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover"
       >
         Privacy Policy
+      </a>{" "}
+      and{" "}
+      <a
+        href="/terms"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover"
+      >
+        Terms and Conditions
       </a>
       .
     </label>
