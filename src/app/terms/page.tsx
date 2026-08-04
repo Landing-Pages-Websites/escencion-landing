@@ -1,6 +1,13 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-const sections = [
+type TermsSection = {
+  number: string;
+  title: string;
+  content: ReactNode;
+};
+
+const sections: TermsSection[] = [
   {
     number: "01",
     title: "Company Information",
@@ -13,13 +20,13 @@ const sections = [
           related business-development services for MSP and MSSP companies.
         </p>
 
-        <div className="mt-6 border-l border-[#ff6847] pl-5">
+        <div className="mt-6 border-l border-[#8B5CF6] pl-5">
           <p className="font-medium text-white">Escencion LLC</p>
           <p>Irvine, California</p>
 
           <a
             href="mailto:support@escencion.com"
-            className="mt-2 block text-[#ff8064] transition hover:text-[#ff9b85]"
+            className="mt-2 block text-[#8B5CF6] transition-colors hover:text-[#9F75F8]"
           >
             support@escencion.com
           </a>
@@ -28,7 +35,7 @@ const sections = [
             href="https://www.escencion.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-[#ff8064] transition hover:text-[#ff9b85]"
+            className="block text-[#8B5CF6] transition-colors hover:text-[#9F75F8]"
           >
             www.escencion.com
           </a>
@@ -57,7 +64,7 @@ const sections = [
             "Copy, reproduce, republish, or distribute protected content without permission.",
           ].map((item) => (
             <li key={item} className="flex gap-3">
-              <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff6847]" />
+              <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#8B5CF6]" />
               <span>{item}</span>
             </li>
           ))}
@@ -80,8 +87,8 @@ const sections = [
           The scope, duration, pricing, deliverables, and other conditions of a
           paid engagement may also be governed by a separate proposal, service
           agreement, statement of work, invoice, or other written agreement.
-          Where a separate written agreement conflicts with these Terms, that
-          written agreement will control for the applicable engagement.
+          If a separate written agreement conflicts with these Terms, that
+          agreement will control for the applicable engagement.
         </p>
 
         <p className="mt-5">
@@ -158,7 +165,7 @@ const sections = [
     title: "SMS/Text Messaging Terms",
     content: (
       <>
-        <div className="rounded-2xl border border-[#ff6847]/30 bg-[#ff6847]/[0.06] p-5 sm:p-6">
+        <div className="rounded-2xl border border-[#8B5CF6]/30 bg-[#8B5CF6]/10 p-5 sm:p-6">
           <p>
             If you voluntarily provide your mobile phone number and select the
             SMS consent checkbox on one of our website forms, you agree to
@@ -173,15 +180,15 @@ const sections = [
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#ff8064]">
+          <div className="rounded-2xl border border-[#8B5CF6]/25 bg-[#8B5CF6]/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8B5CF6]">
               Message frequency
             </p>
             <p className="mt-2 text-white">Message frequency varies.</p>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#ff8064]">
+          <div className="rounded-2xl border border-[#8B5CF6]/25 bg-[#8B5CF6]/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8B5CF6]">
               Carrier charges
             </p>
             <p className="mt-2 text-white">
@@ -189,8 +196,8 @@ const sections = [
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#ff8064]">
+          <div className="rounded-2xl border border-[#8B5CF6]/25 bg-[#8B5CF6]/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8B5CF6]">
               Opt out
             </p>
             <p className="mt-2 text-white">
@@ -198,8 +205,8 @@ const sections = [
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#ff8064]">
+          <div className="rounded-2xl border border-[#8B5CF6]/25 bg-[#8B5CF6]/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8B5CF6]">
               Assistance
             </p>
             <p className="mt-2 text-white">
@@ -212,7 +219,7 @@ const sections = [
           You may also request assistance by contacting{" "}
           <a
             href="mailto:support@escencion.com"
-            className="text-[#ff8064] underline decoration-[#ff6847]/50 underline-offset-4 transition hover:text-[#ff9b85]"
+            className="text-[#8B5CF6] underline decoration-[#8B5CF6]/50 underline-offset-4 transition-colors hover:text-[#9F75F8]"
           >
             support@escencion.com
           </a>
@@ -272,7 +279,7 @@ const sections = [
 
         <Link
           href="/privacy-policy"
-          className="mt-5 inline-flex items-center gap-2 font-semibold text-[#ff8064] transition hover:text-[#ff9b85]"
+          className="mt-5 inline-flex items-center gap-2 font-semibold text-[#8B5CF6] transition-colors hover:text-[#9F75F8]"
         >
           View our Privacy Policy
           <span aria-hidden="true">→</span>
@@ -299,13 +306,13 @@ const sections = [
       <>
         <p>Questions about these Terms may be directed to:</p>
 
-        <div className="mt-6 border-l border-[#ff6847] pl-5">
+        <div className="mt-6 border-l border-[#8B5CF6] pl-5">
           <p className="font-medium text-white">Escencion LLC</p>
           <p>Irvine, California</p>
 
           <a
             href="mailto:support@escencion.com"
-            className="mt-2 block text-[#ff8064] transition hover:text-[#ff9b85]"
+            className="mt-2 block text-[#8B5CF6] transition-colors hover:text-[#9F75F8]"
           >
             support@escencion.com
           </a>
@@ -314,7 +321,7 @@ const sections = [
             href="https://www.escencion.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-[#ff8064] transition hover:text-[#ff9b85]"
+            className="block text-[#8B5CF6] transition-colors hover:text-[#9F75F8]"
           >
             www.escencion.com
           </a>
@@ -326,29 +333,51 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#090909] text-[#aaa7a2]">
-      {/* Background details */}
+    <main className="relative min-h-screen overflow-hidden bg-[#07080D] text-[#A8B3CC]">
+      {/* Grid background */}
       <div
-        className="pointer-events-none fixed inset-0 opacity-[0.22]"
         aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(139,92,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.08) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+        }}
+      />
+
+      {/* Background glows */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="absolute left-[-180px] top-[-220px] h-[520px] w-[520px] rounded-full bg-[#ff6847]/20 blur-[150px]" />
-        <div className="absolute right-[-200px] top-[25%] h-[500px] w-[500px] rounded-full bg-[#ff6847]/10 blur-[180px]" />
+        <div className="absolute left-[-180px] top-[-220px] h-[520px] w-[520px] rounded-full bg-[#8B5CF6]/20 blur-[160px]" />
+        <div className="absolute right-[-220px] top-[28%] h-[520px] w-[520px] rounded-full bg-[#8B5CF6]/10 blur-[180px]" />
+        <div className="absolute bottom-[-260px] left-[25%] h-[500px] w-[500px] rounded-full bg-cyan-500/5 blur-[180px]" />
       </div>
 
       {/* Header */}
-      <header className="relative z-20 border-b border-white/10 bg-[#090909]/85 backdrop-blur-xl">
+      <header className="relative z-20 border-b border-white/10 bg-[#07080D]/85 backdrop-blur-xl">
         <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
           <Link
             href="/"
-            className="text-lg font-semibold uppercase tracking-[0.16em] text-white"
+            aria-label="Escencion home"
+            className="group inline-flex items-center gap-3"
           >
-            Escencion
+            <span className="relative block h-9 w-9">
+              <span className="absolute left-1/2 top-1 h-5 w-5 -translate-x-1/2 rotate-45 rounded-[3px] bg-white" />
+              <span className="absolute bottom-1 left-1 h-5 w-5 rotate-45 rounded-[3px] bg-white" />
+              <span className="absolute bottom-1 right-1 h-5 w-5 rotate-45 rounded-[3px] bg-white" />
+              <span className="absolute left-1/2 top-[13px] h-4 w-4 -translate-x-1/2 rotate-45 bg-[#07080D]" />
+            </span>
+
+            <span className="text-xl font-semibold uppercase tracking-[0.08em] text-white">
+              Escencion
+            </span>
           </Link>
 
           <Link
             href="/#get-started"
-            className="inline-flex items-center justify-center rounded-full bg-[#ff6847] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#ff8064]"
+            className="inline-flex items-center justify-center rounded-lg bg-[#8B5CF6] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_12px_30px_-12px_rgba(139,92,246,0.8)] transition-all hover:-translate-y-0.5 hover:bg-[#9F75F8]"
           >
             Get Started
           </Link>
@@ -356,20 +385,20 @@ export default function TermsPage() {
       </header>
 
       {/* Hero */}
-      <section className="relative border-b border-white/10">
+      <section className="relative z-10 border-b border-white/10">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
           <div className="max-w-4xl">
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.24em] text-[#ff8064]">
+            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#8B5CF6]">
               Legal / Terms
             </p>
 
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-white sm:text-6xl lg:text-8xl">
+            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-[#F1F5FF] sm:text-6xl lg:text-8xl">
               Terms and
               <br />
-              conditions.
+              <span className="text-[#8B5CF6]">conditions.</span>
             </h1>
 
-            <p className="mt-8 max-w-2xl text-base leading-7 text-[#aaa7a2] sm:text-lg sm:leading-8">
+            <p className="mt-8 max-w-2xl text-base leading-7 text-[#A8B3CC] sm:text-lg sm:leading-8">
               These Terms govern your access to and use of the Escencion
               website, services, communications, and related offerings.
             </p>
@@ -388,12 +417,12 @@ export default function TermsPage() {
       </section>
 
       {/* Legal content */}
-      <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24 lg:px-12">
-        <div className="grid gap-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-20">
-          {/* Side navigation */}
+      <div className="relative z-10 mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24 lg:px-12">
+        <div className="grid gap-12 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-20">
+          {/* Desktop navigation */}
           <aside className="hidden lg:block">
-            <div className="sticky top-28">
-              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-[#ff8064]">
+            <div className="sticky top-28 rounded-2xl border border-white/10 bg-[#0D0E16]/80 p-6 backdrop-blur">
+              <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-[#8B5CF6]">
                 On this page
               </p>
 
@@ -403,9 +432,9 @@ export default function TermsPage() {
                     <li key={section.number}>
                       <a
                         href={`#section-${section.number}`}
-                        className="group flex gap-3 text-sm text-[#77736e] transition hover:text-white"
+                        className="group flex gap-3 text-sm text-[#7E89A2] transition-colors hover:text-white"
                       >
-                        <span className="font-mono text-[#ff6847]">
+                        <span className="font-mono text-[#8B5CF6]">
                           {section.number}
                         </span>
                         <span>{section.title}</span>
@@ -417,10 +446,10 @@ export default function TermsPage() {
             </div>
           </aside>
 
-          {/* Sections */}
-          <article className="min-w-0">
+          {/* Terms */}
+          <article className="min-w-0 rounded-3xl border border-white/10 bg-[#0D0E16]/80 px-6 py-10 shadow-2xl backdrop-blur-sm sm:px-10 sm:py-14">
             <div className="mb-14 border-b border-white/10 pb-14">
-              <p className="text-lg leading-8 text-[#c7c3be]">
+              <p className="text-lg leading-8 text-[#C3CADB]">
                 These Terms and Conditions (&ldquo;Terms&rdquo;) govern your
                 access to and use of the Escencion website, services,
                 communications, and related offerings. By using our website or
@@ -433,19 +462,19 @@ export default function TermsPage() {
                 <section
                   key={section.number}
                   id={`section-${section.number}`}
-                  className="scroll-mt-28 border-b border-white/10 py-12 first:pt-0 sm:py-16"
+                  className="scroll-mt-28 border-b border-white/10 py-12 first:pt-0 last:border-b-0 last:pb-0 sm:py-16"
                 >
                   <div className="grid gap-5 sm:grid-cols-[72px_minmax(0,1fr)] sm:gap-8">
-                    <p className="font-mono text-sm text-[#ff6847]">
+                    <p className="font-mono text-sm text-[#8B5CF6]">
                       [ {section.number} ]
                     </p>
 
                     <div>
-                      <h2 className="text-2xl font-semibold tracking-[-0.025em] text-white sm:text-3xl">
+                      <h2 className="text-2xl font-semibold tracking-[-0.025em] text-[#F1F5FF] sm:text-3xl">
                         {section.title}
                       </h2>
 
-                      <div className="mt-6 text-[15px] leading-7 text-[#aaa7a2] sm:text-base sm:leading-8">
+                      <div className="mt-6 text-[15px] leading-7 text-[#A8B3CC] sm:text-base sm:leading-8">
                         {section.content}
                       </div>
                     </div>
@@ -458,44 +487,51 @@ export default function TermsPage() {
       </div>
 
       {/* CTA */}
-      <section className="relative border-t border-white/10">
+      <section className="relative z-10 border-t border-white/10">
         <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.035] px-6 py-12 text-center sm:px-10 sm:py-16">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#ff8064]">
-              Ready to begin?
-            </p>
+          <div className="relative overflow-hidden rounded-[2rem] border border-[#8B5CF6]/25 bg-[#0D0E16]/90 px-6 py-12 text-center shadow-[0_30px_90px_-40px_rgba(139,92,246,0.55)] sm:px-10 sm:py-16">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-0 h-56 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#8B5CF6]/25 blur-[100px]"
+            />
 
-            <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-semibold tracking-[-0.035em] text-white sm:text-5xl">
-              Let&apos;s solve the gap in your team.
-            </h2>
+            <div className="relative">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8B5CF6]">
+                Ready to begin?
+              </p>
 
-            <p className="mx-auto mt-5 max-w-2xl leading-7 text-[#aaa7a2]">
-              Tell us where your MSP or MSSP needs support, and we&apos;ll help
-              identify the right role and the right person.
-            </p>
+              <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-semibold tracking-[-0.035em] text-white sm:text-5xl">
+                Let&apos;s solve the gap in your team.
+              </h2>
 
-            <Link
-              href="/#get-started"
-              className="mt-8 inline-flex items-center justify-center rounded-full bg-[#ff6847] px-7 py-3.5 font-semibold text-white transition hover:bg-[#ff8064]"
-            >
-              Get Started
-              <span className="ml-2" aria-hidden="true">
-                →
-              </span>
-            </Link>
+              <p className="mx-auto mt-5 max-w-2xl leading-7 text-[#A8B3CC]">
+                Tell us where your MSP or MSSP needs support, and we&apos;ll
+                help identify the right role and the right person.
+              </p>
+
+              <Link
+                href="/#get-started"
+                className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#8B5CF6] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.1em] text-white shadow-[0_14px_35px_-14px_rgba(139,92,246,0.85)] transition-all hover:-translate-y-0.5 hover:bg-[#9F75F8]"
+              >
+                Get Started
+                <span className="ml-2" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative border-t border-white/10">
+      <footer className="relative z-10 border-t border-white/10 bg-[#07080D]/90">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-8 text-sm sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12">
           <p>© {new Date().getFullYear()} Escencion LLC.</p>
 
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link
               href="/privacy-policy"
-              className="transition hover:text-white"
+              className="transition-colors hover:text-white"
             >
               Privacy Policy
             </Link>
@@ -506,7 +542,7 @@ export default function TermsPage() {
 
             <a
               href="mailto:support@escencion.com"
-              className="transition hover:text-white"
+              className="transition-colors hover:text-white"
             >
               Contact
             </a>
