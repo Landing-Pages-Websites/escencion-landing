@@ -95,8 +95,49 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
     []
   );
 
-  // Button click: validate FIRST, then hand off to the form's native submit.
-  // An empty/invalid/disqualified action must never reach the API or tracking.
+  // Guarded async persistence. Called DIRECTLY from the CTA click — never via a
+  // native form submit. The synchronous inFlightRef flip (before the first
+  // await) blocks duplicate in-flight attempts from rapid clicks. Tracking and
+  // redirect fire ONLY after a confirmed {ok:true}; a thrown/HTTP error clears
+  // the in-flight state, surfaces the error, and retains values for retry.
+  const persist = useCallback(async (): Promise<void> => {
+    if (inFlightRef.current || submitted) return;
+    inFlightRef.current = true;
+    setStatus("submitting");
+    try {
+      const result = await submit({
+        full_name: values.full_name.trim(),
+        work_email: values.work_email.trim(),
+        phone: values.phone,
+        company_name: values.company_name.trim(),
+        role_to_fill: values.role_to_fill,
+        is_msp_mssp_owner: values.is_msp_mssp_owner,
+        sms_consent: smsConsent,
+        sms_consent_text: smsConsent ? SMS_CONSENT_TEXT : "",
+      });
+      if (result.ok) {
+        trackMegaTag(idPrefix);
+        pushDataLayer();
+        setSubmitted(true);
+        setStatus("success");
+        window.setTimeout(() => {
+          window.location.href = CALENDLY_URL;
+        }, REDIRECT_DELAY_MS);
+        return;
+      }
+      // Fail closed: persistence failed, so allow a retry rather than
+      // inventing success. No tracking, no redirect.
+      inFlightRef.current = false;
+      setStatus("error");
+    } catch {
+      inFlightRef.current = false;
+      setStatus("error");
+    }
+  }, [idPrefix, smsConsent, submit, submitted, values]);
+
+  // Button click: validate FIRST, then call persistence DIRECTLY. No native
+  // form submission is ever triggered. An empty/invalid/disqualified action
+  // must never reach the API or tracking.
   const onValidate = useCallback((): void => {
     const form = formRef.current;
     if (!form || submitting || submitted || inFlightRef.current) return;
@@ -111,58 +152,15 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       return;
     }
 
-    form.requestSubmit();
-  }, [submitting, submitted, values]);
+    void persist();
+  }, [submitting, submitted, values, persist]);
 
-  // Native form submit: guarded async persistence. Prevent default so the page
-  // never navigates; the inFlightRef flip blocks duplicate in-flight attempts.
-  const onSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-      e.preventDefault();
-      if (inFlightRef.current || submitted) return;
-      // Fail closed for EVERY native submit path (incl. Enter-key, which never
-      // runs onValidate): re-validate here as defense in depth before any API
-      // call, tracking, or redirect can fire.
-      if (!e.currentTarget.reportValidity()) return;
-      if (values.phone !== "" && !isValidPhone(values.phone)) return;
-      if (values.is_msp_mssp_owner === "No") {
-        setStatus("disqualified");
-        return;
-      }
-      inFlightRef.current = true;
-      setStatus("submitting");
-      try {
-        const result = await submit({
-          full_name: values.full_name.trim(),
-          work_email: values.work_email.trim(),
-          phone: values.phone,
-          company_name: values.company_name.trim(),
-          role_to_fill: values.role_to_fill,
-          is_msp_mssp_owner: values.is_msp_mssp_owner,
-          sms_consent: smsConsent,
-          sms_consent_text: smsConsent ? SMS_CONSENT_TEXT : "",
-        });
-        if (result.ok) {
-          trackMegaTag(idPrefix);
-          pushDataLayer();
-          setSubmitted(true);
-          setStatus("success");
-          window.setTimeout(() => {
-            window.location.href = CALENDLY_URL;
-          }, REDIRECT_DELAY_MS);
-          return;
-        }
-        // Fail closed: persistence failed, so allow a retry rather than
-        // inventing success.
-        inFlightRef.current = false;
-        setStatus("error");
-      } catch {
-        inFlightRef.current = false;
-        setStatus("error");
-      }
-    },
-    [idPrefix, smsConsent, submit, submitted, values]
-  );
+  // Defensive only: block EVERY native submit path (incl. Enter-key). Prevent
+  // default synchronously and do nothing else — no persistence, tracking,
+  // redirect, or native submit. Persistence flows solely through the CTA click.
+  const onSubmit = useCallback((e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+  }, []);
 
   if (status === "success") {
     return (
