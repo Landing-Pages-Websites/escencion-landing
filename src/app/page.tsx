@@ -194,7 +194,7 @@ const STEPS = [
   {
     n: "05",
     title: "Placed & Guaranteed",
-    body: "Every placement carries a replacement guarantee — if a hire does not work out inside the agreed window, we re-run the search.",
+    body: "Every placement carries a replacement guarantee: if a hire does not work out inside the agreed window, we re-run the search.",
   },
 ];
 
@@ -358,13 +358,13 @@ export default function Home(): ReactElement {
           <div className="lg:col-start-1 lg:row-start-1 lg:pt-4">
             <Kicker>Only for MSP &amp; MSSP owners</Kicker>
             <h1 className="h1 text-ink">
-              We find and place the people your{" "}
-              <span className="text-accent">MSP or MSSP</span> needs.
+              Fill the <span className="text-accent">MSP or MSSP</span> role
+              slowing your growth.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted md:text-lg">
-              Tell us the role you&apos;re hiring for — technical, sales, marketing,
-              operations, admin, or anything in between — and we&apos;ll find and
-              place someone already experienced in MSP and MSSP environments.
+              Tell us the seat: technical, sales, operations or leadership. We
+              source and vet candidates with MSP/MSSP experience so you do not
+              start from zero.
             </p>
           </div>
 
@@ -374,8 +374,11 @@ export default function Home(): ReactElement {
           >
             <p className="kicker mb-1">Start here</p>
             <h2 className="h3 mb-1 text-ink">What role do you need filled?</h2>
-            <p className="mb-5 text-sm text-muted">
+            <p className="mb-4 text-sm text-muted">
               A short, no-pressure call. We map the gap and the fix.
+            </p>
+            <p className="mb-5 font-mono text-[11px] uppercase leading-snug tracking-wider text-accent">
+              Operator-led vetting • MSP/MSSP experience • Technical, GTM and operations roles
             </p>
             <LeadForm idPrefix="hero" />
           </div>
@@ -788,7 +791,7 @@ export default function Home(): ReactElement {
             </p>
             <ul className="mt-8 space-y-3">
               {[
-                "Operator-led screening — vetted the way we vet for our own shop",
+                "Operator-led screening, vetted the way we vet for our own shop",
                 "Talent that already speaks the MSP & MSSP world",
                 "Every placement backed by a replacement guarantee",
               ].map((point) => (
@@ -804,7 +807,10 @@ export default function Home(): ReactElement {
             className="rounded-2xl border border-border bg-surface p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)] md:p-8"
           >
             <p className="kicker mb-1">Start here</p>
-            <h3 className="h3 mb-6 text-ink">What role do you need filled?</h3>
+            <h3 className="h3 mb-4 text-ink">What role do you need filled?</h3>
+            <p className="mb-6 font-mono text-[11px] uppercase leading-snug tracking-wider text-accent">
+              Operator-led vetting • MSP/MSSP experience • Technical, GTM and operations roles
+            </p>
             <LeadForm idPrefix="cta" />
           </Reveal>
         </div>

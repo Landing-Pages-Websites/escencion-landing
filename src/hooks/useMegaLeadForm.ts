@@ -239,7 +239,7 @@ export function useMegaLeadForm(options: MegaLeadFormOptions): UseMegaLeadFormRe
       const result = await response.json();
 
       // Post form_submit event directly to events-api for Conversions tab
-      // (no optimizer needed — we send the exact payload format it expects)
+      // (no optimizer needed; we send the exact payload format it expects)
       try {
         const eventsPayload = {
           eventId: `evt_${crypto.randomUUID()}`,

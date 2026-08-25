@@ -6,7 +6,7 @@ import { ArrowRight, Close, Menu } from "@/components/icons";
 
 function Wordmark(): ReactElement {
   return (
-    <a href="#hero" className="flex items-center" aria-label="Escencion — home">
+    <a href="#hero" className="flex items-center" aria-label="Escencion home">
       <Image
         src="/images/escencion-logo-white.png"
         alt="Escencion"

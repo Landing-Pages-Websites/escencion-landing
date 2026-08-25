@@ -82,10 +82,12 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
   const onSubmit = useCallback(async (): Promise<void> => {
     const form = formRef.current;
     if (!form || status === "submitting") return;
-    // Validate FIRST — an empty/invalid submit must not fire an event or redirect.
-    if (!form.reportValidity() || !isValidPhone(values.phone)) return;
+    // Validate FIRST: an empty/invalid submit must not fire an event or redirect.
+    // Phone is optional: blank passes, but any non-empty value must be a valid phone.
+    if (!form.reportValidity()) return;
+    if (values.phone !== "" && !isValidPhone(values.phone)) return;
 
-    // Gate: only MSP/MSSP owners may submit. "No" respondents are blocked here —
+    // Gate: only MSP/MSSP owners may submit. "No" respondents are blocked here:
     // no network request, no dataLayer event, no Calendly redirect.
     if (values.is_msp_mssp_owner === "No") {
       setStatus("disqualified");
@@ -124,7 +126,7 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
         </span>
         <h3 className="h3 text-ink">You&apos;re in.</h3>
         <p className="text-sm text-muted">
-          Success — redirecting you to book your strategy session&hellip;
+          Success: redirecting you to book your strategy session&hellip;
         </p>
       </div>
     );
@@ -135,7 +137,7 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       <div className="flex flex-col items-center justify-center gap-3 py-10 text-center">
         <h3 className="h3 text-ink">This service is for MSP &amp; MSSP owners</h3>
         <p className="text-sm text-muted">
-          Thank you for your interest — Escencion works exclusively with MSP and
+          Thank you for your interest. Escencion works exclusively with MSP and
           MSSP business owners. If you are an MSP or MSSP owner, please go back
           and select &quot;Yes&quot; to continue.
         </p>
@@ -195,9 +197,7 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       </div>
 
       <div className="field">
-        <label htmlFor={id("phone")}>
-          Phone Number <span className="req">*</span>
-        </label>
+        <label htmlFor={id("phone")}>Phone Number</label>
         <input
           id={id("phone")}
           name="phone"
@@ -206,7 +206,6 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
           autoComplete="tel"
           pattern="\(\d{3}\) \d{3}-\d{4}"
           placeholder="(555) 555-5555"
-          required
           value={values.phone}
           onChange={onChange}
         />
@@ -333,16 +332,16 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
           type="button"
           onClick={onSubmit}
           disabled={submitting}
-          aria-label="Get Started — book your MSP / MSSP strategy session"
+          aria-label="Tell Us the Role: book your MSP / MSSP strategy session"
           className="group flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(139, 92, 246,0.35)] active:translate-y-px disabled:cursor-not-allowed disabled:bg-muted-2 disabled:shadow-none"
         >
-          {submitting ? "Sending…" : "Get Started"}
+          {submitting ? "Sending…" : "Tell Us the Role"}
           {!submitting && (
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           )}
         </button>
         <p className="mt-3 text-center text-xs text-muted-2">
-          No spam. A short, no-pressure call — for MSP &amp; MSSP owners only.
+          No spam. A short, no-pressure call for MSP &amp; MSSP owners only.
         </p>
       </div>
     </form>
