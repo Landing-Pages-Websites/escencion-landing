@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   type ChangeEvent,
+  type FormEvent,
   type ReactElement,
 } from "react";
 import { useMegaLeadForm } from "@/hooks/useMegaLeadForm";
@@ -48,6 +49,18 @@ const EMPTY: FormState = {
   is_msp_mssp_owner: "",
 };
 
+// Delay before redirecting so the success state can render (accessibility + QA).
+const REDIRECT_DELAY_MS = 1000;
+
+interface MegaTagApi {
+  trackEvent?: (event: string, props?: Record<string, unknown>) => void;
+}
+
+function trackMegaTag(idPrefix: string): void {
+  const w = window as unknown as { MegaTag?: MegaTagApi };
+  w.MegaTag?.trackEvent?.("form_submit", { form_id: idPrefix });
+}
+
 function pushDataLayer(): void {
   const w = window as unknown as { dataLayer?: Record<string, unknown>[] };
   w.dataLayer = w.dataLayer || [];
@@ -65,9 +78,12 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
     source_provider: SOURCE_PROVIDER,
   });
   const formRef = useRef<HTMLFormElement>(null);
+  const inFlightRef = useRef(false);
   const [values, setValues] = useState<FormState>(EMPTY);
   const [status, setStatus] = useState<Status>("idle");
+  const [submitted, setSubmitted] = useState(false);
   const [smsConsent, setSmsConsent] = useState(false);
+  const submitting = status === "submitting";
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
       const { name, value } = e.target;
@@ -79,11 +95,12 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
     []
   );
 
-  const onSubmit = useCallback(async (): Promise<void> => {
+  // Button click: validate FIRST, then hand off to the form's native submit.
+  // An empty/invalid/disqualified action must never reach the API or tracking.
+  const onValidate = useCallback((): void => {
     const form = formRef.current;
-    if (!form || status === "submitting") return;
-    // Validate FIRST: an empty/invalid submit must not fire an event or redirect.
-    // Phone is optional: blank passes, but any non-empty value must be a valid phone.
+    if (!form || submitting || submitted || inFlightRef.current) return;
+    // Phone is optional: blank passes, but any non-empty value must be valid.
     if (!form.reportValidity()) return;
     if (values.phone !== "" && !isValidPhone(values.phone)) return;
 
@@ -94,29 +111,58 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       return;
     }
 
-    setStatus("submitting");
-    try {
-        const result = await submit({
-      full_name: values.full_name.trim(),
-      work_email: values.work_email.trim(),
-      phone: values.phone,
-      company_name: values.company_name.trim(),
-      role_to_fill: values.role_to_fill,
-      is_msp_mssp_owner: values.is_msp_mssp_owner,
-      sms_consent: smsConsent,
-      sms_consent_text: smsConsent ? SMS_CONSENT_TEXT : "",
-    });
-      if (result.ok) {
-        pushDataLayer();
-        setStatus("success");
-        window.location.href = CALENDLY_URL;
+    form.requestSubmit();
+  }, [submitting, submitted, values]);
+
+  // Native form submit: guarded async persistence. Prevent default so the page
+  // never navigates; the inFlightRef flip blocks duplicate in-flight attempts.
+  const onSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      e.preventDefault();
+      if (inFlightRef.current || submitted) return;
+      // Fail closed for EVERY native submit path (incl. Enter-key, which never
+      // runs onValidate): re-validate here as defense in depth before any API
+      // call, tracking, or redirect can fire.
+      if (!e.currentTarget.reportValidity()) return;
+      if (values.phone !== "" && !isValidPhone(values.phone)) return;
+      if (values.is_msp_mssp_owner === "No") {
+        setStatus("disqualified");
         return;
       }
-      setStatus("error");
-    } catch {
-      setStatus("error");
-    }
-  }, [smsConsent, status, submit, values]);
+      inFlightRef.current = true;
+      setStatus("submitting");
+      try {
+        const result = await submit({
+          full_name: values.full_name.trim(),
+          work_email: values.work_email.trim(),
+          phone: values.phone,
+          company_name: values.company_name.trim(),
+          role_to_fill: values.role_to_fill,
+          is_msp_mssp_owner: values.is_msp_mssp_owner,
+          sms_consent: smsConsent,
+          sms_consent_text: smsConsent ? SMS_CONSENT_TEXT : "",
+        });
+        if (result.ok) {
+          trackMegaTag(idPrefix);
+          pushDataLayer();
+          setSubmitted(true);
+          setStatus("success");
+          window.setTimeout(() => {
+            window.location.href = CALENDLY_URL;
+          }, REDIRECT_DELAY_MS);
+          return;
+        }
+        // Fail closed: persistence failed, so allow a retry rather than
+        // inventing success.
+        inFlightRef.current = false;
+        setStatus("error");
+      } catch {
+        inFlightRef.current = false;
+        setStatus("error");
+      }
+    },
+    [idPrefix, smsConsent, submit, submitted, values]
+  );
 
   if (status === "success") {
     return (
@@ -153,13 +199,13 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
   }
 
   const id = (name: string): string => `${idPrefix}-${name}`;
-  const submitting = status === "submitting";
+  const disabled = submitting || submitted;
 
   return (
     <form
       ref={formRef}
       className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={onSubmit}
       noValidate
     >
       <div className="field sm:col-span-2">
@@ -284,7 +330,7 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       name="sms_consent"
       type="checkbox"
       checked={smsConsent}
-      disabled={submitting}
+      disabled={disabled}
       onChange={(e) => setSmsConsent(e.target.checked)}
       className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
     />
@@ -330,8 +376,8 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       <div className="sm:col-span-2">
         <button
           type="button"
-          onClick={onSubmit}
-          disabled={submitting}
+          onClick={onValidate}
+          disabled={disabled}
           aria-label="Tell Us the Role: book your MSP / MSSP strategy session"
           className="group flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-7 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-[var(--color-ink-dark)] transition-all duration-150 hover:bg-accent-hover hover:shadow-[0_0_24px_rgba(139, 92, 246,0.35)] active:translate-y-px disabled:cursor-not-allowed disabled:bg-muted-2 disabled:shadow-none"
         >
