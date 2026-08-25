@@ -244,6 +244,35 @@ const WHY_US: WhyUsCard[] = [
   },
 ];
 
+interface ServiceModel {
+  title: string;
+  icon: IconType;
+  body: string;
+}
+
+const SERVICE_MODELS: ServiceModel[] = [
+  {
+    title: "Staff Augmentation",
+    icon: Users,
+    body: "We add people to your existing team and manage the embedded talent day to day. You keep your process and your direction.",
+  },
+  {
+    title: "Managed Services",
+    icon: Layers,
+    body: "We take ownership of an entire function, including the people, process, tooling, and reporting. You keep the outcome and the key calls.",
+  },
+  {
+    title: "Management & Leadership",
+    icon: Target,
+    body: "We lead and manage your existing people by adding a leadership layer. You keep your people and your payroll.",
+  },
+  {
+    title: "Recruiting",
+    icon: Search,
+    body: "We source, screen, and place talent you hire directly. You own the hire and the post-hire management.",
+  },
+];
+
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
@@ -706,6 +735,36 @@ export default function Home(): ReactElement {
           <Reveal className="text-center">
             <CtaLink />
           </Reveal>
+        </div>
+      </section>
+
+      {/* ═══ SERVICE MODELS ═══ */}
+      <section id="service-models" className="border-t border-border bg-surface-3 py-20 md:py-28">
+        <div className="mx-auto max-w-[1200px] px-6 md:px-12">
+          <Reveal className="max-w-3xl">
+            <Kicker>Service Models</Kicker>
+            <h2 className="h2 text-ink">Four ways we can work together.</h2>
+            <p className="mt-5 leading-relaxed text-muted">
+              However we engage, it starts with the right people. Pick the model that
+              fits each function, and stack more than one as your shop grows.
+            </p>
+          </Reveal>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {SERVICE_MODELS.map((model, i) => (
+              <Reveal
+                as="article"
+                key={model.title}
+                delay={(i % 4) * 60}
+                className="glow-hover flex flex-col rounded-2xl border border-border bg-surface p-6"
+              >
+                <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg border border-accent/25 bg-surface-2 text-accent">
+                  <model.icon className="h-5 w-5" />
+                </span>
+                <h3 className="font-display text-lg font-semibold text-ink">{model.title}</h3>
+                <p className="mt-3 leading-relaxed text-muted">{model.body}</p>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
