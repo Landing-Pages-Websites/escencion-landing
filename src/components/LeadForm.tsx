@@ -28,14 +28,13 @@ const ROLE_OPTIONS = [
   "Other",
 ] as const;
 const SMS_CONSENT_TEXT =
-  "I agree to receive conversational SMS/text messages from Escencion regarding my inquiry, consultation, appointment scheduling, meeting reminders, service updates, follow-ups, and customer support. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for assistance. Consent is not a condition of purchasing any goods or services.";
+  "I agree to receive conversational text messages from Escencion about my inquiry, appointments, and service updates. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. View our Privacy Policy and Terms and Conditions.";
 type Status = "idle" | "submitting" | "success" | "error" | "disqualified";
 
 interface FormState {
   full_name: string;
   work_email: string;
   phone: string;
-  company_name: string;
   role_to_fill: string;
   is_msp_mssp_owner: string;
 }
@@ -44,7 +43,6 @@ const EMPTY: FormState = {
   full_name: "",
   work_email: "",
   phone: "",
-  company_name: "",
   role_to_fill: "",
   is_msp_mssp_owner: "",
 };
@@ -109,7 +107,6 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
         full_name: values.full_name.trim(),
         work_email: values.work_email.trim(),
         phone: values.phone,
-        company_name: values.company_name.trim(),
         role_to_fill: values.role_to_fill,
         is_msp_mssp_owner: values.is_msp_mssp_owner,
         sms_consent: smsConsent,
@@ -256,22 +253,6 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       </div>
 
       <div className="field sm:col-span-2">
-        <label htmlFor={id("company_name")}>
-          Company Name <span className="req">*</span>
-        </label>
-        <input
-          id={id("company_name")}
-          name="company_name"
-          type="text"
-          autoComplete="organization"
-          placeholder="Your MSP / MSSP"
-          required
-          value={values.company_name}
-          onChange={onChange}
-        />
-      </div>
-
-      <div className="field sm:col-span-2">
         <label htmlFor={id("role_to_fill")}>
           Role looking to fill <span className="req">*</span>
         </label>
@@ -337,13 +318,11 @@ export default function LeadForm({ idPrefix }: LeadFormProps): ReactElement {
       htmlFor={id("sms_consent")}
       className="text-sm leading-6 text-muted"
     >
-      I agree to receive conversational SMS/text messages from Escencion
-      regarding my inquiry, consultation, appointment scheduling, meeting
-      reminders, service updates, follow-ups, and customer support.
+      I agree to receive conversational text messages from Escencion about my
+      inquiry, appointments, and service updates.
       Message frequency varies. Message and data rates may apply.
       Reply <strong>STOP</strong> to opt out or <strong>HELP</strong> for
-      assistance. Consent is not a condition of purchasing any goods or
-      services. View our{" "}
+      help. Consent is not a condition of purchase. View our{" "}
       <a
         href="https://escencion.com/privacy-policy-page"
         target="_blank"
