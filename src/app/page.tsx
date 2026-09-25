@@ -42,6 +42,13 @@ const STAT_CHIPS = [
   { big: "Ready Day One", small: "no training from zero" },
 ];
 
+const HERO_LOGOS = [
+  { file: "layer-7-systems.png", alt: "Layer 7 Systems logo", width: 449 },
+  { file: "patientlock.png", alt: "PatientLock logo", width: 547 },
+  { file: "send-it-solutions.png", alt: "Send IT Solutions logo", width: 152 },
+];
+const HERO_LOGO_HEIGHT = 88;
+
 interface RoleCard {
   area: string;
   title: string;
@@ -373,7 +380,7 @@ export default function Home(): ReactElement {
       <SiteChrome />
 
       {/* ═══ HERO ═══ */}
-      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pb-20 pt-24 md:pb-28 md:pt-36">
+      <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pb-16 pt-22 md:pb-28 md:pt-36">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url(/brand/hero-cyber.jpg)" }}
@@ -381,25 +388,41 @@ export default function Home(): ReactElement {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-bg/70 via-bg/85 to-bg" aria-hidden="true" />
         <div className="grid-overlay absolute inset-0" aria-hidden="true" />
-        {/* DOM order (mobile) = headline → form → chips, so the form stays above the fold.
-            On lg, explicit grid placement puts the form on the right, chips under the headline. */}
-        <div className="relative mx-auto grid w-full max-w-[1200px] items-start gap-x-12 gap-y-6 px-6 md:px-12 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-[auto_1fr] lg:gap-y-8">
+        {/* DOM order (mobile) = headline → logos → form → chips, so the form stays above the fold.
+            On lg, explicit grid placement puts the form on the right, logos and chips under the headline. */}
+        <div className="relative mx-auto grid w-full max-w-[1200px] items-start gap-x-12 gap-y-5 px-6 md:gap-y-6 md:px-12 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-[auto_auto_1fr] lg:gap-y-8">
           <div className="lg:col-start-1 lg:row-start-1 lg:pt-4">
             <Kicker>Only for MSP &amp; MSSP owners</Kicker>
             <h1 className="h1 text-ink">
-              Fill the <span className="text-accent">MSP or MSSP</span> role
-              slowing your growth.
+              Find the right hire for your{" "}
+              <span className="text-accent">MSP or MSSP</span>.
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-muted md:text-lg">
-              Tell us the seat: technical, sales, operations or leadership. We
-              source and vet candidates with MSP/MSSP experience so you do not
-              start from zero.
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-muted md:mt-5 md:text-lg">
+              Tell us the role or team gap. Escencion’s MSP/MSSP operators source
+              and vet candidates who know your world.
             </p>
           </div>
 
+          <ul
+            aria-label="MSP and MSSP clients we have worked with"
+            className="flex flex-wrap items-center gap-x-5 gap-y-3 lg:col-start-1 lg:row-start-2"
+          >
+            {HERO_LOGOS.map((logo) => (
+              <li key={logo.file}>
+                <Image
+                  src={`/images/clients/${logo.file}`}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={HERO_LOGO_HEIGHT}
+                  className="h-5 w-auto opacity-80 sm:h-6 lg:h-7"
+                />
+              </li>
+            ))}
+          </ul>
+
           <div
             id="get-started-hero"
-            className="rounded-2xl border border-border bg-surface/90 p-5 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md sm:p-6 md:p-8 lg:col-start-2 lg:row-span-2 lg:row-start-1"
+            className="rounded-2xl border border-border bg-surface/90 p-5 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md sm:p-6 md:p-8 lg:col-start-2 lg:row-span-3 lg:row-start-1"
           >
             <p className="kicker mb-1">Start here</p>
             <h2 className="h3 mb-1 text-ink">What role do you need filled?</h2>
@@ -412,7 +435,7 @@ export default function Home(): ReactElement {
             <LeadForm idPrefix="hero" />
           </div>
 
-          <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:col-start-1 lg:row-start-2">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:col-start-1 lg:row-start-3">
             {STAT_CHIPS.map((chip) => (
               <div
                 key={chip.big}
